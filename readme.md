@@ -4,7 +4,7 @@
 npm install get-vue-story -g
 ```
 ```js
-git clone
+git clone https://github.com/Aircity/vue-story.git
 cd vue-story & npm install
 cd story
 vstory run
