@@ -1,0 +1,136 @@
+<template>
+	<div class="list"> 
+		<ul>
+			<li class="parent" v-for="item in menu">
+				<div class="field" @click.stop="toggle(item)" :class="{ active: item.active }">
+					<i class="folder open outline icon"></i>
+					<p class="name">{{item.name}}</p>
+					<i class="angle right icon"></i>
+				</div>					
+				<ul v-if="item.children" v-show="item.active">
+					<li v-for="field in item.children" @click="render(field)" :class="{ active: field.id === activeState }">
+						<p class="name"><i class="file outline icon"></i>{{field.name}}</p>
+					</li>
+				</ul>					
+			
+			</li>
+		</ul>
+	</div>
+</template>
+<style lang="less">
+	.list {
+		li {
+			cursor: pointer;
+			position: relative;
+			transition: background-color .1s;
+			&.parent {
+				border-bottom: 1px solid #444;
+				ul {
+					background-color: #2c3b41;
+					li {
+						padding: 12px 16px;
+					}
+				}
+			}
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.03);
+			}
+			border-left: 3px solid transparent;
+			&.active {
+				background-color: rgba(255, 255, 255, 0.1);
+				border-left: 3px solid #42b983;
+				color: #f4f4f4;
+			}
+			.field {
+				position: relative;
+				padding: 14px 12px;
+				color: #f4f4f4;
+				i.right {
+					position: absolute;
+					right: 10px;
+					top: 50%;
+					margin-top: -7px;
+				}
+			}
+		}
+		.avatar,
+		.name {
+			vertical-align: middle;
+		}
+		.avatar {
+			border-radius: 2px;
+		}
+		.name {
+			display: inline-block;
+			margin: 0 0 0 15px;
+		}
+		.field.active {
+			i.right {
+				transform: rotate(90deg);
+			}
+		}
+	}
+</style>
+<style src="semantic-ui-icon/icon.css"></style>
+<script>
+	import db from 'db'
+
+	import {
+		mapState
+	}
+	from 'vuex'
+
+	import {
+		mapActions
+	}
+	from 'vuex'
+
+	import path from 'path'
+
+	export default {
+		computed: mapState({
+			menu: state => {
+				let menu = state.menu;
+				let filterKey = state.filterKey;
+				return menu.filter(menu => menu.name.includes(filterKey));
+			},
+			activeState: 'activeState'
+		}),
+		methods: {
+			...mapActions([
+				'selectActive',
+				'mounter'
+			]),
+			toggle(item) {
+				if (item.active) {
+					return;
+				}
+				this.menu.forEach(item => {
+					item.active = false
+				})
+				item.active = true;
+				if (item.children.length > 0) {
+					this.render(item.children[0])
+				}
+			},
+			render(item) {
+				if (item.id == this.activeState) {
+					return;
+				}
+				this.selectActive(item.id)
+				db.get('preview').then(function(doc) {
+					return db.put({
+						_id: 'preview',
+						_rev: doc._rev,
+						path: item.link,
+						auto: item.id,
+						prev: doc.auto,
+						state: 'beforeMount'
+					});
+				})
+				let iframe = document.getElementsByTagName("iframe")[0];				
+				iframe.contentWindow.location.reload();
+			}
+		}
+	};
+</script>

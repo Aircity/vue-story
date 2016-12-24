@@ -1,0 +1,152 @@
+<template>
+<div ref="preview">
+	<div id="app">
+	</div>	
+</div>
+</template>
+
+<script>
+	import db from 'db';
+
+	let fnVue
+	let holdData;
+	
+	export default {
+		name: "preview",
+		beforeCreate() {
+			Vue.mixin({
+				methods: {
+					$console(str) {
+						let data = {
+							content: str,
+							count: 1
+						}
+						let post = () => {
+							let arr = []
+							arr.push(data);
+							db.post({
+								_id: 'logs',
+								arr: arr
+							})
+						}
+						db.get('logs').then(doc => {
+							let arr = doc.arr;
+							if (doc.arr.length > 0) {
+								let last = arr.pop();								
+								if (last.content == str) {
+									last.count += 1;
+									arr.push(last)
+								} else {
+									arr.push(last)
+									arr.push(data)
+								}
+							} else {
+								arr.push(data)
+							}
+							db.put({
+								_id: 'logs',
+								_rev: doc._rev,
+								arr: arr
+							});
+							
+						}).catch(err => {
+							if (err.name == "not_found") {
+								post()
+							}
+						});
+					}
+				}
+			})
+		},
+		data: () => ({}),
+		methods: {
+			mounter(filename) {
+				let self = this;
+				let context = require.context('storybook', true, /\.vue/)
+				
+				let load = require.context('!!template-loader!storybook', true, /\.vue/)
+				if (module.hot) {
+					module.hot.accept(load.id, function(updatedDependencies) {
+						load = require.context('!!template-loader!storybook', true, /\.vue/);
+						db.get('preview').then(function(doc) {
+							doc.template = load(filename);
+							db.put(doc).catch(err => {
+								console.log(err)
+							})
+						})
+					});
+				}
+				
+				let dep = (callback) => {
+					require.ensure([], function(require) {
+						let mainFn = {}
+						mainFn.option = context(filename);
+						mainFn.template = load(filename)
+						callback(mainFn)
+					}, "dynamic");
+				}
+
+				dep(mainFn => {
+					let option = mainFn.option;
+					let _default = {
+						template: mainFn.template,
+						data: option.data ? option.data() : {},
+						state: 'mounted'
+					};
+					holdData = _default.data;
+
+					db.get('preview').then(function(doc) {
+						Object.assign(doc, _default);
+						db.put(doc).catch(err => {
+							console.log(err)
+						})
+					})
+
+					fnVue = new Vue({
+						el: '#app',
+						render: h => h('div', {
+							attrs: {
+								id: 'app'
+							}
+						}, [h(option)])
+					})
+
+				})
+			},
+			init() {
+				let self = this;
+				console.clear();
+				db.get('preview').then(function(doc) {
+					if (doc.state == 'beforeMount') {
+						self.mounter(doc.path)
+					}
+				})
+			},
+			updateData() {
+				let self = this;
+				db.changes({
+					doc_ids: ['data'],
+					since: 'now',
+					live: true,
+					include_docs: true,
+				}).on('change', function(change) {
+					let fnData = fnVue.$children[0].$data;
+					let isChange = (JSON.stringify(holdData) == JSON.stringify(fnData)) ? false : true
+					if (isChange) {
+						db.get('preview').then(function(doc) {
+							doc.data = fnData
+							db.put(doc).catch(err => {
+								console.log(err)
+							})
+						})
+					}
+				})
+
+			}
+		},
+		mounted() {
+			this.init();
+			this.updateData();
+		}
+	}
+</script>

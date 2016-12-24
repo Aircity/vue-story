@@ -1,0 +1,66 @@
+<script>
+import { mapActions } from 'vuex'	
+export default {
+		name: "card",
+	    methods: {
+			...mapActions([
+				'search'
+			]),				
+			onKeyup (e) {
+				 this.search(e.target.value);
+			}				
+	}	
+};
+</script>
+
+<template>
+<div class="card">
+    <header>
+        <img class="avatar" width="40" height="40"  src="../assets/logo.png">
+        <p class="name">Vue Story</p>
+    </header>
+    <footer>
+        <input class="search" type="text" placeholder="filter text..." @keyup="onKeyup">
+    </footer>
+</div>
+</template>
+
+<style lang="less">
+.card {
+    padding: 12px;
+    border-bottom: solid 1px #444;
+		.name {
+			color: #f4f4f4;
+			font-size: 18px;
+			font-family: Helvetica,cursive;			
+		}
+    footer {
+        margin-top: 10px;
+    }
+
+    .avatar, .name {
+        vertical-align: middle;
+    }
+    .avatar {
+        border-radius: 2px;
+    }
+    .name {
+        display: inline-block;
+        margin: 0 0 0 15px;
+        font-size: 16px;
+				font-family: 'Open Sans', Tahoma, Arial, sans-serif;
+    }
+    .search {
+        padding: 0 10px;
+        width: 100%;
+        font-size: 12px;
+        color: #fff;
+        height: 36px;
+        line-height: 36px;
+        border: solid 1px #3a3a3a;
+        border-radius: 4px;
+        outline: none;
+        background-color: #26292E;
+    }
+}
+</style>

@@ -1,0 +1,17 @@
+<template>
+	<div class="board">
+		<iframe class="iframe" src="preview.html" frameborder="0" ref="iframe"></iframe>
+	</div>
+</template> 
+
+<style lang="less">
+	.board {
+		padding: 10px 15px;
+    overflow-y: auto;
+    height: 100%;
+	}
+  .iframe {
+    width: 100%;
+    min-height: 100%;
+  }
+</style>

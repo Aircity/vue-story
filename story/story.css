@@ -1,0 +1,91 @@
+body {
+	font-family: 'Open Sans', Tahoma, Arial, sans-serif;
+	font-size: 1.2em;
+	letter-spacing: 0.2px;
+	line-height: 1.5;
+	padding: 0;
+	margin: 0 2em;
+}
+
+#content {
+	max-width: 50em;
+	margin: 0 auto;
+}
+
+footer {
+	text-align: center;
+	margin: 2em 0;
+	font-size: 0.8em;
+}
+
+input, textarea {
+	font-family: 'Open Sans', Tahoma, Arial, sans-serif;
+	font-size: 1em;
+	padding: 0.25em 0.5em;
+}
+
+textarea {
+	width: 100%;
+}
+
+#graveyard table, #graveyard thead, #graveyard tbody, #graveyard tfoot, #graveyard tr, #graveyard th, #graveyard td {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-collapse: inherit;
+    border-spacing: 0;
+    border-color: inherit;
+    vertical-align: inherit;
+    text-align: left;
+    font-weight: inherit;
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+}
+table {
+	width: 100% !important;
+}
+table p {
+	margin: 0;
+}
+p.inscription {
+	margin-bottom: 2em;
+}
+
+body#graveyard #content {
+	max-width: 30em;
+}
+.poetry {
+	text-align: center;
+	display: inline-block;
+}
+.poetry p {
+	text-align: left;
+	margin: 0 auto;
+}
+p.error {
+	margin-top: 2em;
+	font-weight: bold;
+	color: red;
+}
+
+body {
+	text-align: center;
+}
+body p#status {
+	font-size: 6em;
+	font-weight: bold;
+	margin: 0.25em;
+}
+body p#description {
+	font-style: italic;
+	color: #666;
+	font-size: 1.1em;
+}
+
+@media all and (max-width: 600px) {
+	form table td {
+		display: block;
+	}
+}
