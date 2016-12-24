@@ -1,6 +1,6 @@
 {
   "name": "vue-story",
-  "version": "0.1.22",
+  "version": "0.3.2-git",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -38,5 +38,20 @@
     "vuex": "^2.0.0",
     "webpack": "^2.2.0-rc.2",
     "webpack-dev-server": "^2.2.0-rc.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aircity/vue-story.git"
+  },
+  "author": "aircity",
+  "bugs": {
+    "url": "https://github.com/Aircity/vue-story/issues"
+  },
+  "homepage": "https://github.com/Aircity/vue-story#readme",
+  "description": "Seperate UI Environment for Vue",
+  "keywords": [
+    "vue",
+    "storybook"
+  ]
 }
