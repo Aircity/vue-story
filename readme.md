@@ -43,13 +43,18 @@ Story('Story')
  ```
  2. port
  ```bash 
- vstory run [filename] -p 9000
+ vstory run -p 9000
  ``` 
  3. lib -- at global imports 
-```bash
- vstory run [filename] -l [filename]
-```
-```js
-import 'jquery'
-import 'bootstrap'
-```
+ ```bash
+  vstory run  -l [filename]
+ ```
+ 
+ -- lib.js
+ ```js
+ import 'jquery'
+ import 'bootstrap'
+ ```
+ ```bash
+  vstory run -l lib.js
+ ``` 
