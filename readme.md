@@ -35,3 +35,21 @@ Story('Story')
 		link: 'die.vue'
 	})  
 ```
+
+## Options
+ 1. startup
+ ```bash
+ vstory run [filename] 
+ ```
+ 2. port
+ ```bash 
+ vstory run [filename] -p 9000
+ ``` 
+ 3. lib -- at global imports 
+```bash
+ vstory run [filename] -l [filename]
+```
+```js
+import 'jquery'
+import 'bootstrap'
+```
