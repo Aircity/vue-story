@@ -7,7 +7,6 @@
 <style lang="less">
 	.board {
 		padding: 10px 15px;
-    overflow-y: auto;
     height: 100%;
 	}
   .iframe {

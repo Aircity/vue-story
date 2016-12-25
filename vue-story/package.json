@@ -24,7 +24,7 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "pouchdb": "^6.0.7",
+    "pouchdb": "^6.1.0",
     "prismjs": "^1.5.1",
     "raw-loader": "^0.5.1",
     "semantic-ui-icon": "^2.2.3",
@@ -36,7 +36,7 @@
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.6",
     "vuex": "^2.0.0",
-    "webpack": "^2.2.0-rc.2",
+    "webpack": "^2.1.0-beta.28",
     "webpack-dev-server": "^2.2.0-rc.0"
   },
   "devDependencies": {},
