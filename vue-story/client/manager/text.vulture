@@ -190,9 +190,9 @@
 		mapActions
 	} from 'vuex'
 
-	import Code from './lib/code';
+	import Code from '!!vue-loader!./lib/code';
 
-	import Json from './lib/json'
+	import Json from '!!vue-loader!./lib/json'
 
 	import {
 		default as beautify

@@ -1,4 +1,4 @@
-import Story from '../vue-story'
+import Story from 'vue-story'
 
 Story('Vue')
 	.add({

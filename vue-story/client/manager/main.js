@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App'
+import App from '!!vue-loader!./App'
 import store from 'store.js'
 
 new Vue({		

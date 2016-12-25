@@ -1,8 +1,8 @@
 <script>
-import Card from './card';
-import List from './list';
-import Bar from './text';
-import Board from './board';
+import Card from '!!vue-loader!./card';
+import List from '!!vue-loader!./list';
+import Bar from '!!vue-loader!./text';
+import Board from '!!vue-loader!./board';
 
 export default {
     components: { Card, List,Bar,Board }
