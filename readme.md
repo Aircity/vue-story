@@ -53,11 +53,12 @@ Story('Story')
  ```bash
   vstory start  -l [filename]
  ```
- -- lib.js
- ```js
- import 'jquery'
- import 'bootstrap'
- ```
- ```bash
+ 
+  -- lib.js
+  ```js
+  import 'jquery'
+  import 'bootstrap'
+  ```
+  ```bash
   vstory start -l lib.js
- ``` 
+  ``` 
