@@ -50,6 +50,10 @@ Story('Story')
  -p 9000
  ``` 
  4. lib -- at global imports 
+ ```
+ vstory run -p 9000
+ ``` 
+ 3. lib -- at global imports 
  ```bash
   vstory run  -l [filename]
  ```
