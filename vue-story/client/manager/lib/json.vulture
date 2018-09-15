@@ -1,22 +1,22 @@
 <template>
-<pre :style="{background: 'none' }"><code v-html="text"></code></pre>
+	<pre :style="{background: 'none' }"><code v-html="text"></code></pre>
 </template>
 
 <script>
-	import Prism from 'prismjs';
-	import 'prismjs/components/prism-json';
-	export default {
-		props: {
-			template: {
-				 default:""
-			}
-		},
-		computed: {
-			text: function() {
-				return Prism.highlight(JSON.stringify(this.template), Prism.languages.json)	
-			}
-		}
-	} 
+import Prism from "prismjs"
+import "prismjs/components/prism-json"
+export default {
+  props: {
+    template: {
+      default: "",
+    },
+  },
+  computed: {
+    text: function() {
+      return Prism.highlight(JSON.stringify(this.template), Prism.languages.json)
+    },
+  },
+}
 </script>
 
 <style src="prismjs/themes/prism.css"></style>

@@ -1,308 +1,313 @@
 <template>
-  <div class="console-tabs" ref="panel" v-if="open">
-    <div class="tab-header">
-      <span
-        class="title"
-        :class="{active: active === 'template'}"
-        @mousedown.stop
-        @click="active = 'template'">
-       <i class="code icon"></i>
-        Template
-      </span>   
-      <span
-        class="title"
-        :class="{active: active === 'data'}"
-        @mousedown.stop
-        @click="active = 'data'">
-        <i class="database icon"></i>
-        Data
-      </span>         
-      <span
-        class="title"
-        :class="{active: active === 'console'}"
-        @mousedown.stop
-        @click="active = 'console'">
-        <i class="alarm outline icon"></i>
-        Console
-      </span>
-      <div class="tab-actions">
-        <span v-if="active === 'console' && logs.length>0"
-          class="tab-action"
-          @mousedown.stop @click="clearLog">          
-        	<i class="trash outline icon"></i>
-        </span>
-        <span v-if="active === 'data'"
-          class="tab-action"
-          @mousedown.stop @click="updateData">          
-        	<i class="refresh icon"></i>
-        </span>  
-        <span class="tab-action"  @mousedown.stop @click="isShow">
-        	<i class="maximize icon"></i>      
-        </span>              
-      </div>
-    </div>
-    <div class="tab-body-box" v-show="showbody">
-    <div    
- 			v-if="active === 'template'"     
-      class="tab-body">
-				<v-code ref="html" v-bind:template="template"></v-code>
-    </div>
-    <div    
- 			v-if="active === 'data'"     
-      class="tab-body">
-				<v-json ref="data" v-bind:template="data"></v-json>
-    </div>
-    <div
-      v-if="active === 'console'"     
-      class="tab-body console-body">
-			<div class="console-item" v-for="log in logs">
-				<pre><span class="logs-count">{{ log.count }}</span><code>{{ log.content }}</code></pre>
-			</div>						
-    </div>			
-    </div>
-          
-  </div>
+	<div class="console-tabs"
+	     ref="panel"
+	     v-if="open">
+		<div class="tab-header">
+			<span class="title"
+			      :class="{active: active === 'template'}"
+			      @mousedown.stop
+			      @click="active = 'template'">
+				<i class="code icon"></i>
+				Template
+			</span>
+			<span class="title"
+			      :class="{active: active === 'data'}"
+			      @mousedown.stop
+			      @click="active = 'data'">
+				<i class="database icon"></i>
+				Data
+			</span>
+			<span class="title"
+			      :class="{active: active === 'console'}"
+			      @mousedown.stop
+			      @click="active = 'console'">
+				<i class="alarm outline icon"></i>
+				Console
+			</span>
+			<div class="tab-actions">
+				<span v-if="active === 'console' && logs.length>0"
+				      class="tab-action"
+				      @mousedown.stop
+				      @click="clearLog">
+					<i class="trash outline icon"></i>
+				</span>
+				<span v-if="active === 'data'"
+				      class="tab-action"
+				      @mousedown.stop
+				      @click="updateData">
+					<i class="refresh icon"></i>
+				</span>
+				<span class="tab-action"
+				      @mousedown.stop
+				      @click="isShow">
+					<i class="maximize icon"></i>
+				</span>
+			</div>
+		</div>
+		<div class="tab-body-box"
+		     v-show="showbody">
+			<div v-if="active === 'template'"
+			     class="tab-body">
+				<v-code ref="html"
+				        v-bind:template="template"></v-code>
+			</div>
+			<div v-if="active === 'data'"
+			     class="tab-body">
+				<v-json ref="data"
+				        v-bind:template="data"></v-json>
+			</div>
+			<div v-if="active === 'console'"
+			     class="tab-body console-body">
+				<div class="console-item"
+				     v-for="log in logs">
+					<pre><span class="logs-count">{{ log.count }}</span><code>{{ log.content }}</code></pre>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </template>
 
 <style lang="less">
-	.console-tabs {
-		.logs-count {
-			color: #fff;
-			background-color: #42b983;
-			text-align: center;
-			font-size: 9px;
-			padding: 2px 3px;
-			line-height: .9;
-			min-width: 22px;
-			overflow: hidden;
-			display: inline-block;
-			border-radius: 6px;
-			margin-right: 5px;
-			vertical-align: text-bottom;
-		}
-		border-top: 1px solid #e2e2e2;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		.console-item {
-			pre {
-				padding: 6px;
-				margin: 0;
-			}
-			code {
-				color: #d14;
-			}
-		}
-		.console-item:not(:first-child) {
-			border-top: 1px solid #f0f0f0;
-		}
-		.tab-header {
-			line-height: 28px;
-			padding: 0 4px;
-			font-size: 12px;
-			border-bottom: 1px solid #e2e2e2;
-			user-select: none;
-			/*			cursor: row-resize;*/
-			background-color: white;
-			i {
-				height: auto;
-				color: #999;
-				font-size: 14px;
-				margin-top: -2px;
-			}
-			.title {
-				vertical-align: middle;
-				text-transform: uppercase;
-				color: #999;
-				display: inline-flex;
-				align-items: center;
-				background-color: white;
-				cursor: pointer;
-				position: relative;
-				padding-right: 12px;
-				&.active {
-					color: #333;
-					i {
-						color: #333;
-					}
-				}
-				&:hover {
-					color: #666;
-				}
-				.logs-count {
-					color: white;
-					background-color: #42b983;
-					height: 14px;
-					line-height: 50%;
-					border-radius: 33px;
-					padding: 5px;
-					margin-left: 5px;
-				}
-			}
-		}
-		.tab-body {
-			overflow: auto;
-			/*
+.console-tabs {
+  .logs-count {
+    color: #fff;
+    background-color: #42b983;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: 0.9;
+    min-width: 22px;
+    overflow: hidden;
+    display: inline-block;
+    border-radius: 6px;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+  }
+  border-top: 1px solid #e2e2e2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  .console-item {
+    pre {
+      padding: 6px;
+      margin: 0;
+    }
+    code {
+      color: #d14;
+    }
+  }
+  .console-item:not(:first-child) {
+    border-top: 1px solid #f0f0f0;
+  }
+  .tab-header {
+    line-height: 28px;
+    padding: 0 4px;
+    font-size: 12px;
+    border-bottom: 1px solid #e2e2e2;
+    user-select: none;
+    /*			cursor: row-resize;*/
+    background-color: white;
+    i {
+      height: auto;
+      color: #999;
+      font-size: 14px;
+      margin-top: -2px;
+    }
+    .title {
+      vertical-align: middle;
+      text-transform: uppercase;
+      color: #999;
+      display: inline-flex;
+      align-items: center;
+      background-color: white;
+      cursor: pointer;
+      position: relative;
+      padding-right: 12px;
+      &.active {
+        color: #333;
+        i {
+          color: #333;
+        }
+      }
+      &:hover {
+        color: #666;
+      }
+      .logs-count {
+        color: white;
+        background-color: #42b983;
+        height: 14px;
+        line-height: 50%;
+        border-radius: 33px;
+        padding: 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+  .tab-body {
+    overflow: auto;
+    /*
 			max-height: 320px;
 			min-height: 120px;
 */
-			height: 180px;
-			padding: 10px 12px;
-			background-color: #fff;
-			&.console-body {
-				padding: 0 12px;
-			}
-		}
-		.console-item:not(:first-child) {
-			border-top: 1px solid #f0f0f0;
-		}
-		.tab-actions {
-			float: right;
-			height: 26px;
-			.tab-action {
-				display: inline-flex;
-				align-items: center;
-				height: 26px;
-				cursor: pointer;
-				&:hover {
-					svg {
-						color: #333;
-					}
-				}
-			}
-		}
-		pre[class*="language-"] {
-			margin: 0;
-			padding: 2px 6px;
-		}
-	}
+    height: 180px;
+    padding: 10px 12px;
+    background-color: #fff;
+    &.console-body {
+      padding: 0 12px;
+    }
+  }
+  .console-item:not(:first-child) {
+    border-top: 1px solid #f0f0f0;
+  }
+  .tab-actions {
+    float: right;
+    height: 26px;
+    .tab-action {
+      display: inline-flex;
+      align-items: center;
+      height: 26px;
+      cursor: pointer;
+      &:hover {
+        svg {
+          color: #333;
+        }
+      }
+    }
+  }
+  pre[class*="language-"] {
+    margin: 0;
+    padding: 2px 6px;
+  }
+}
 </style>
 
 <script>
-	import db from 'db'
+import db from "db"
 
-	import {
-		mapState
-	} from 'vuex'
+import { mapState } from "vuex"
 
-	import {
-		mapActions
-	} from 'vuex'
+import { mapActions } from "vuex"
 
-	import Code from '!!vue-loader!./lib/code';
+import Code from "!!vue-loader!./lib/code"
 
-	import Json from '!!vue-loader!./lib/json'
+import Json from "!!vue-loader!./lib/json"
 
-	import {
-		default as beautify
-	} from 'beautify';
+import { default as beautify } from "beautify"
 
-	export default {
-		data: () => ({
-			open: false,
-			active: 'template',
-			template: '',
-			data: {},
-			logs: [],
-			showbody: true
-		}),
-		methods: {
-			isShow() {
-				this.showbody = !this.showbody;
-			},
-			getLog() {
-				let self = this;
-				db.changes({
-					doc_ids: ['logs'],
-					since: 'now',
-					live: true,
-					include_docs: true
-				}).on('change', function(change) {
-					if (change.doc.arr) {
-						self.active = 'console'
-						self.logs = change.doc.arr;
-						self.$nextTick(() => {
-							let consoleTag = document.querySelector(".console-body");
-							if (consoleTag) {
-								consoleTag.scrollTop = consoleTag.scrollHeight;
-							}
-						})
-					}
-				})
-			},
-			updateData() {
-				db.get("data").then(doc => {
-					doc.state = "update"
-					db.put(doc)
-				}).catch(err => {
-					if (err.name == "not_found") {
-						db.post({
-							_id: "data",
-							state: "update"
-						})
-					}
-				})
-			},
-			getControl() {
-				let self = this;
-				db.changes({
-					doc_ids: ['preview'],
-					since: 'now',
-					live: true,
-					include_docs: true,
-					filter: function(doc) {
-						return doc.state === 'mounted';
-					}
-				}).on('change', function(change) {
-					let doc = change.doc;
-					self.template = beautify(doc.template, {
-						format: 'html'
-					});
-					self.data = doc.data;
-				})
-			},
-			clearLog() {
-				db.get('logs').then(function(doc) {
-					let arr = [];
-					db.put({
-						_id: 'logs',
-						_rev: doc._rev,
-						arr: arr
-					})
-				})
-			},
-			init() {
-				this.active = 'template'
-				if (this.logs.length > 0) {
-					this.clearLog();
-				}
-			}
-		},
-		components: {
-			'v-code': Code,
-			'v-json': Json
-		},
-		computed: mapState({
-			current: function(state) {
-				if (state.activeState == 0) {
-					this.open = false;
-				} else {
-					this.open = true
-				}
-				return state.activeState;
-			}
-		}),
-		watch: {
-			current: {
-				handler(data) {
-					this.init();
-				}
-			}
-		},
-		mounted() {
-			this.getLog();
-			this.getControl();
-		}
-	};
+export default {
+  data: () => ({
+    open: false,
+    active: "template",
+    template: "",
+    data: {},
+    logs: [],
+    showbody: true,
+  }),
+  methods: {
+    isShow() {
+      this.showbody = !this.showbody
+    },
+    getLog() {
+      let self = this
+      db
+        .changes({
+          doc_ids: ["logs"],
+          since: "now",
+          live: true,
+          include_docs: true,
+        })
+        .on("change", function(change) {
+          if (change.doc.arr) {
+            self.active = "console"
+            self.logs = change.doc.arr
+            self.$nextTick(() => {
+              let consoleTag = document.querySelector(".console-body")
+              if (consoleTag) {
+                consoleTag.scrollTop = consoleTag.scrollHeight
+              }
+            })
+          }
+        })
+    },
+    updateData() {
+      db
+        .get("data")
+        .then(doc => {
+          doc.state = "update"
+          db.put(doc)
+        })
+        .catch(err => {
+          if (err.name == "not_found") {
+            db.post({
+              _id: "data",
+              state: "update",
+            })
+          }
+        })
+    },
+    getControl() {
+      let self = this
+      db
+        .changes({
+          doc_ids: ["preview"],
+          since: "now",
+          live: true,
+          include_docs: true,
+          filter: function(doc) {
+            return doc.state === "mounted"
+          },
+        })
+        .on("change", function(change) {
+          let doc = change.doc
+          self.template = beautify(doc.template, {
+            format: "html",
+          })
+          self.data = doc.data
+        })
+    },
+    clearLog() {
+      db.get("logs").then(function(doc) {
+        let arr = []
+        db.put({
+          _id: "logs",
+          _rev: doc._rev,
+          arr: arr,
+        })
+      })
+    },
+    init() {
+      this.active = "template"
+      if (this.logs.length > 0) {
+        this.clearLog()
+      }
+    },
+  },
+  components: {
+    "v-code": Code,
+    "v-json": Json,
+  },
+  computed: mapState({
+    current: function(state) {
+      if (state.activeState == 0) {
+        this.open = false
+      } else {
+        this.open = true
+      }
+      return state.activeState
+    },
+  }),
+  watch: {
+    current: {
+      handler(data) {
+        this.init()
+      },
+    },
+  },
+  mounted() {
+    this.getLog()
+    this.getControl()
+  },
+}
 </script>

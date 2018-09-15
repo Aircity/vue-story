@@ -1,27 +1,27 @@
 <template>
-<pre :style="{background: 'none' }"><code v-html="text"></code></pre>
+	<pre :style="{background: 'none' }"><code v-html="text"></code></pre>
 </template>
 
 <script>
-	import Prism from 'prismjs';
-	import 'prismjs/components/prism-handlebars';
-	export default {
-		props: {
-			template: {
-				 default:""
-			}
-		},
-		computed: {
-			text: function() {
-				return Prism.highlight(this.template, Prism.languages.handlebars)	
-			}
-		}
-	} 
+import Prism from "prismjs"
+import "prismjs/components/prism-handlebars"
+export default {
+  props: {
+    template: {
+      default: "",
+    },
+  },
+  computed: {
+    text: function() {
+      return Prism.highlight(this.template, Prism.languages.handlebars)
+    },
+  },
+}
 </script>
 
 <style src="prismjs/themes/prism.css"></style>
 <style>
-	pre {
-		margin: 0;
-	}
+pre {
+  margin: 0;
+}
 </style>

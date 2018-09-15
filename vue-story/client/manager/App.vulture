@@ -1,74 +1,78 @@
 <script>
-import Card from '!!vue-loader!./card';
-import List from '!!vue-loader!./list';
-import Bar from '!!vue-loader!./text';
-import Board from '!!vue-loader!./board';
+import Card from "!!vue-loader!./card"
+import List from "!!vue-loader!./list"
+import Bar from "!!vue-loader!./text"
+import Board from "!!vue-loader!./board"
 
 export default {
-    components: { Card, List,Bar,Board }
+  components: { Card, List, Bar, Board },
 }
 </script>
 
 <template>
-<div id="app">
+  <div id="app">
     <div class="sidebar">
-        <card></card>
-        <list></list>
+      <card></card>
+      <list></list>
     </div>
     <div class="main">
-        <board></board>
-        <bar></bar>
+      <board></board>
+      <bar></bar>
     </div>
-</div>
+  </div>
 </template>
 
-<style lang="less">	
+<style lang="less">
 * {
-		box-sizing: border-box;
+  box-sizing: border-box;
 }
-*:before, *:after {
-		box-sizing: inherit;
+*:before,
+*:after {
+  box-sizing: inherit;
 }
-body, html {
-		height: 100%;
-		overflow: hidden;
+body,
+html {
+  height: 100%;
+  overflow: hidden;
 }
-body, ul {
-		margin: 0;
-		padding: 0;
+body,
+ul {
+  margin: 0;
+  padding: 0;
 }
 body {
-		color: #4d4d4d;
-		font: 14px/1.4em 'Helvetica Neue', Helvetica, 'Microsoft Yahei', Arial, sans-serif;
-		font-smoothing: antialiased; 
+  color: #4d4d4d;
+  font: 14px/1.4em "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+  font-smoothing: antialiased;
 }
 ul {
-		list-style: none;
+  list-style: none;
 }
-	
+
 #app {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  .sidebar,
+  .main {
     height: 100%;
+  }
+  .sidebar {
+    float: left;
+    width: 280px;
+    color: #737373;
+    background-color: #222d32;
+  }
+  .main {
+    position: relative;
     overflow: hidden;
-    border-radius: 3px;
-    .sidebar, .main {
-        height: 100%;
-    }
-    .sidebar {
-        float: left;
-        width: 280px;
-        color: #737373;
-			  background-color: #222d32
-    }
-    .main {
-        position: relative;
-        overflow: hidden;
-        background-color: #eee;
-    }
-    .text {
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-        left: 0;
-    }
+    background-color: #eee;
+  }
+  .text {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
 }
 </style>
