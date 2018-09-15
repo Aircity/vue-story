@@ -43,7 +43,6 @@ ul {
 body {
   color: #4d4d4d;
   font: 14px/1.4em "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
-  font-smoothing: antialiased;
 }
 ul {
   list-style: none;

@@ -1,5 +1,7 @@
 # Finally - official Storybook for Vue implementation! - check [storybooks/storybook](https://github.com/storybooks/storybook/tree/master/app/vue)
 
+:warning: This project is no longer being maintained
+
 ## Getting Started
 
 ```js

@@ -1,4 +1,6 @@
-See the [github](https://github.com/Aircity/vue-story).# Finally - official Storybook for Vue implementation! - check [storybooks/storybook](https://github.com/storybooks/storybook/tree/master/app/vue)
+# Finally - official Storybook for Vue implementation! - check [storybooks/storybook](https://github.com/storybooks/storybook/tree/master/app/vue)
+
+:warning: This project is no longer being maintained
 
 ## Getting Started
 
